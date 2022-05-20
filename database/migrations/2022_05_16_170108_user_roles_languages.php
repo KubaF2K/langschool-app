@@ -16,8 +16,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('first_name');
+            $table->string('last_name');
             $table->foreignIdFor(Language::class)->nullable()->constrained();
-            $table->foreignIdFor(Role::class)->nullable()->constrained();
+            $table->foreignIdFor(Role::class)->constrained();
         });
     }
 
@@ -29,6 +31,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('first_name');
+            $table->dropColumn('last_name');
             $table->dropForeign('users_language_id_foreign');
             $table->dropForeign('users_role_id_foreign');
             $table->dropColumn('language_id');

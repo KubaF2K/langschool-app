@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("code")->unique();
             $table->string("name");
-            $table->text("desc");
+            $table->text("description");
             $table->string("img")->nullable();
             $table->timestamps();
         });

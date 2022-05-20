@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text("description");
             $table->decimal("price");
             $table->foreignIdFor(Language::class)->constrained();
-            $table->foreignIdFor(User::class, "teacher_id")->constrained();
+            $table->foreignIdFor(User::class, "teacher_id")->constrained("users");
             $table->timestamps();
         });
     }
