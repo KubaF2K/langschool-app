@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include("shared.head", ['title' => 'Langschool'])
-<body>
+<body style="padding-top: 100px">
 @include("shared.nav", ['title' => 'Langschool'])
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
