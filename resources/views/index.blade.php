@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include("shared.head", ['title' => 'Langschool'])
-<body style="padding-top: 100px">
+<body class="pt-5 pb-4">
 @include("shared.nav", ['title' => 'Langschool'])
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -29,7 +29,7 @@
         <span class="visually-hidden">Następny</span>
     </button>
 </div>
-<div class="container-fluid">
+<div class="container pt-2">
     <div class="row">
         <h2>O naszej szkole</h2>
         <p>
@@ -40,8 +40,21 @@
         </p>
     </div>
     <div class="row">
-        <h2>Najpopularniejsze kursy</h2>
-{{--        TODO 4 karty z najpopularniejszymi--}}
+        @if(count($top_courses) > 0)
+            <h2>Najpopularniejsze kursy</h2>
+        @endif
+        @foreach($top_courses as $course)
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card">
+                    <img src="{{asset('storage/'.$course->language->code.'.svg')}}" class="card-img-top" alt="{{$course->name}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{$course->name}}</h5>
+                        <p class="card-text">{{$course->description.'<br>'.$course->price.' zł'}}</p>
+                        <a href="{{route('courses.show', ['id' => $trip->id])}}" class="btn btn-primary">Więcej szczegółów...</a>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
     <div class="row">
         <h2>Kontakt</h2>

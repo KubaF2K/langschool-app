@@ -9,6 +9,9 @@
                 <li class="nav-item">
                     <a class="nav-link @if(Request::is('/')) active @endif" aria-current="page" href="{{route('index')}}">Strona główna</a>
                 </li>
+                <li>
+                    <a class="nav-link @if(Request::is('/courses')) active @endif" aria-current="page" href="{{route('courses.index')}}">Kursy</a>
+                </li>
             </ul>
             <div class="d-flex">
                 @if(Auth::check())

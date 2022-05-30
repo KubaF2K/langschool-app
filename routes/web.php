@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +15,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    // TODO test
+    $top_courses = DB::select('
+            SELECT * FROM COURSES WHERE id IN (
+                SELECT course_id FROM (
+                    SELECT course_id, COUNT(user_id) c FROM course_user GROUP BY course_id ORDER BY c
+                ) x
+            ) LIMIT 3;
+        ');
+
+    return view('index', ['top_courses' => $top_courses]);
 })->name('index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::controller(CourseController::class)->group(function() {
+    Route::get('/courses', 'index')->name('courses.index');
+});
 
 require __DIR__.'/auth.php';
