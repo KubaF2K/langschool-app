@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,19 +17,25 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // TODO test
-    $top_courses = DB::select('
-            SELECT * FROM COURSES WHERE id IN (
+    $top_course_id_stdclasses = DB::select('
                 SELECT course_id FROM (
                     SELECT course_id, COUNT(user_id) c FROM course_user GROUP BY course_id ORDER BY c
                 ) x
-            ) LIMIT 3;
         ');
+    $top_course_ids = [];
+    foreach ($top_course_id_stdclasses as $id_stdclass) {
+        $top_course_ids[] = $id_stdclass->course_id;
+    }
+    $top_courses = Course::all()
+        ->whereIn('id', $top_course_ids)
+        ->take(4);
 
     return view('index', ['top_courses' => $top_courses]);
 })->name('index');
 
 Route::controller(CourseController::class)->group(function() {
     Route::get('/courses', 'index')->name('courses.index');
+    Route::post('/courses', 'enroll')->name('courses.enroll');
 });
 
 require __DIR__.'/auth.php';

@@ -56,4 +56,11 @@ class Course extends Model
     public function teacher() {
         return $this->belongsTo(User::class, 'teacher_id');
     }
+
+    /*
+     * The language that this course teaches.
+     */
+    public function language() {
+        return $this->belongsTo(Language::class);
+    }
 }

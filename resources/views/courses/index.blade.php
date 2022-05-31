@@ -4,6 +4,16 @@
 <body class="pt-5 pb-4">
 @include("shared.nav", ['title' => 'Langschool'])
 <div class="container pt-4">
+    @if (session('msg'))
+        <div class="alert alert-success">
+            {{session('msg')}}
+        </div>
+    @endif
+    @if (session('err'))
+        <div class="alert alert-danger">
+            {{session('err')}}
+        </div>
+    @endif
     <div class="row">
         <h1>Nasze kursy:</h1>
         @forelse($languages as $language)
@@ -17,6 +27,11 @@
                         <h4>Cena: {{$course->price}} zł</h4>
                         <h5>Prowadzący: {{$course->teacher->first_name.' '.$course->teacher->last_name}}</h5>
 {{--                        TODO Button view, sign up--}}
+                        <form action="{{route('courses.enroll')}}" method="POST">
+                            @csrf
+                            <input name="course_id" type="number" value="{{$course->id}}" style="display: none;"/>
+                            <input type="submit" value="Zapisz się" class="btn btn-primary"/>
+                        </form>
                     </div>
                 @empty
                     <h3>Brak kursów!</h3>

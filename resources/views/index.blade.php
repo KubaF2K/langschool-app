@@ -49,8 +49,8 @@
                     <img src="{{asset('storage/'.$course->language->code.'.svg')}}" class="card-img-top" alt="{{$course->name}}">
                     <div class="card-body">
                         <h5 class="card-title">{{$course->name}}</h5>
-                        <p class="card-text">{{$course->description.'<br>'.$course->price.' zł'}}</p>
-                        <a href="{{route('courses.show', ['id' => $trip->id])}}" class="btn btn-primary">Więcej szczegółów...</a>
+                        <p class="card-text">{{$course->description}}<br>{{$course->price.' zł'}}</p>
+{{--                        <a href="{{route('courses.show', ['id' => $course->id])}}" class="btn btn-primary">Więcej szczegółów...</a>--}}
                     </div>
                 </div>
             </div>
