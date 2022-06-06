@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="pl">
-@include('shared.head', ['title' => 'Langschool'])
+@include('shared.head', ['title' => 'Edytowanie użytkownika'])
 <body class="pt-5 pb-4">
-@include('shared.nav', ['title' => 'Langschool'])
+@include('shared.nav')
 <div class="container pt-2">
-{{--    TODO wszystko--}}
-    <form>
+{{--    TODO errors--}}
     <h2>Edytuj dane</h2>
-    <p>Nazwa użytkownika: {{Auth::user()->name}}</p>
-    <p>Imię i nazwisko: {{Auth::user()->first_name}} {{Auth::user()->last_name}}</p>
-    <p>Adres email: {{Auth::user()->email}}</p>
-    <a href="{{route('user.edit')}}" class="btn btn-primary-outline">Zmień</a>
+    <form method="POST" action="{{route('user.edit')}}">
+        @csrf
+        <div class="mb-3">
+            <label class="form-label" for="name">Nazwa użytkownika</label>
+            <input class="form-control" id="name" name="name" value="{{Auth::user()->name}}">
+        </div>
+        <div>
+            <label class="form-label">Hasło<input class="form-control" type="password" disabled value="password"/></label>
+            <a href="{{route('user.reset-password')}}" class="btn btn-outline-primary">Resetuj hasło</a>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="first_name">Imię</label>
+            <input class="form-control" id="first_name" name="first_name" value="{{Auth::user()->first_name}}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="last_name">Nazwisko</label>
+            <input class="form-control" id="last_name" name="last_name" value="{{Auth::user()->last_name}}">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" name="email" class="form-control" type="email" value="{{Auth::user()->email}}">
+        </div>
+        <input type="submit" class="btn btn-outline-primary" value="Zmień">
     </form>
-    @if (Auth::user()->role_id != 2)
-        <p>Rola: {{__(Auth::user()->role()->name)}}</p>
-    @endif
-    @if (Auth::user()->language_id != null)
-        <p>Język: {{Auth::user()->language()->name}}</p>
-    @endif
-    <p>Utworzono: {{Auth::user()->created_at}}</p>
 </div>
 @include('shared.foot')
 </body>

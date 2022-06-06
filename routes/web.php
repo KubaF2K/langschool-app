@@ -37,10 +37,20 @@ Route::get('/', function () {
 Route::controller(CourseController::class)->group(function() {
     Route::get('/courses', 'index')->name('courses.index');
     Route::post('/courses', 'enroll')->name('courses.enroll');
+    Route::get('/courses/user', 'user')->name('courses.user');
+    Route::get('/courses/teacher', 'teacher')->name('courses.teacher');
+    Route::get('/courses/add', 'add')->name('courses.add');
+    Route::post('/courses/add', 'create')->name('courses.create');
+//    TODO
+    Route::get('/courses/{id}/edit', 'edit')->name('courses.edit');
+    Route::get('/courses/{id}/delete', 'delete')->name('courses.delete');
 });
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index')->name('user.index');
+    Route::get('/user/edit', 'edit')->name('user.edit');
+    Route::post('/user/edit', 'update')->name('user.update');
+    Route::get('/user/reset-password', 'resetPassword')->name('user.reset-password');
 });
 
 require __DIR__.'/auth.php';

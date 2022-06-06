@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="pl">
-@include("shared.head", ['title' => 'Langschool'])
+@include("shared.head", ['title' => 'Kursy'])
 <body class="pt-5 pb-4">
-@include("shared.nav", ['title' => 'Langschool'])
+@include("shared.nav")
 <div class="container pt-4">
     @if (session('msg'))
         <div class="alert alert-success">
             {{session('msg')}}
         </div>
     @endif
-    @if (session('err'))
+    @if ($errors->any())
         <div class="alert alert-danger">
-            {{session('err')}}
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
+    @if(Auth::user()->role->name == 'admin')
+        <a href="{{route('courses.add')}}" class="btn-outline-primary btn">Dodaj kurs</a>
+    @endif
+{{--        TODO usuwanie kursów--}}
     <div class="row">
         <h1>Nasze kursy:</h1>
         @forelse($languages as $language)
@@ -29,7 +37,7 @@
 {{--                        TODO Button view, sign up--}}
                         <form action="{{route('courses.enroll')}}" method="POST">
                             @csrf
-                            <input name="course_id" type="number" value="{{$course->id}}" style="display: none;"/>
+                            <input name="course_id" type="hidden" value="{{$course->id}}"/>
                             <input type="submit" value="Zapisz się" class="btn btn-primary"/>
                         </form>
                     </div>

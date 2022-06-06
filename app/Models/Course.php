@@ -36,6 +36,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Course whereTeacherId($value)
  * @method static Builder|Course whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \App\Models\Language $language
+ * @property-read \App\Models\User $teacher
  */
 class Course extends Model
 {
@@ -47,7 +49,7 @@ class Course extends Model
      * The users that take part in this course.
      */
     public function users() {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     /*
