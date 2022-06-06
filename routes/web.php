@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\UserController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,10 @@ Route::get('/', function () {
 Route::controller(CourseController::class)->group(function() {
     Route::get('/courses', 'index')->name('courses.index');
     Route::post('/courses', 'enroll')->name('courses.enroll');
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/user', 'index')->name('user.index');
 });
 
 require __DIR__.'/auth.php';

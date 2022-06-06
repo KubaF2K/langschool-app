@@ -98,4 +98,25 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class);
     }
+
+    /*
+     * The courses that this user teaches.
+     */
+    public function taughtCourses() {
+        return $this->hasMany(Course::class, 'teacher_id');
+    }
+
+    /*
+     * The language this user has assigned.
+     */
+    public function language() {
+        return $this->belongsTo(Language::class);
+    }
+
+    /*
+     * This user's role.
+     */
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
 }
