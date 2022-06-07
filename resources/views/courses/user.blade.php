@@ -5,7 +5,7 @@
 @include('shared.nav')
 <div class="container pt-2">
     {{--    TODO zapisy na kursy (pending)    --}}
-    <h2>Moje kursy</h2>
+    <h2 class="mb-4">Moje kursy</h2>
     <div class="container border rounded">
         @forelse($courses as $course)
             <div class="row p-2 @if(!$loop->last) border-bottom @endif">
@@ -23,7 +23,7 @@
                 {{--                </form>--}}
             </div>
         @empty
-            <h3>Brak kursów!</h3>
+            <h3 class="p-4">Nie jesteś zapisany/a na żadne kursy!</h3>
         @endforelse
     </div>
 </div>

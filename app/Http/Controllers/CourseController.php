@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseCreateRequest;
+use App\Http\Requests\CourseUpdateRequest;
 use App\Http\Requests\EnrollCourseRequest;
 use App\Models\Course;
 use App\Models\Language;
@@ -44,18 +45,6 @@ class CourseController extends Controller
     }
 
     /*
-     * Returns a view with the teacher's language's courses
-     */
-    public function teacher() {
-        if (!Auth::check())
-            return redirect()->route('login');
-        if (Auth::user()->role->name == 'teacher')
-            return view('courses.teacher', ['courses' => Auth::user()->language->courses]);
-        else
-            abort(403);
-    }
-
-    /*
      * Returns a form to create a new course
      */
     public function add() {
@@ -88,5 +77,48 @@ class CourseController extends Controller
             return redirect()->back()->withInput()->withErrors(['teacher_id' => 'Podany nauczyciel nie uczy podanego języka!']);
         Course::create($course);
         return redirect()->route('courses.index')->with(['msg' => 'Utworzono kurs!']);
+    }
+
+    /*
+     * Return a view to edit a course
+     */
+    public function edit(int $id) {
+        $course = Course::findOrFail($id);
+        if (!Auth::check())
+            abort(401);
+        if (Auth::user()->cannot('update', $course))
+            abort(403);
+        return view('courses.edit', ['course' => $course, 'teachers' => User::where('role_id', '=', Role::where('name', '=', 'teacher')->first()->id)->get()]);
+    }
+
+    /*
+     * Update a course
+     */
+    public function update(CourseUpdateRequest $request, int $id) {
+        $attrs = $request->all();
+        $course = Course::findOrFail($id);
+        if (!Auth::check())
+            abort(401);
+        if (Auth::user()->cannot('update', $course))
+            abort(403);
+        if (User::find($attrs['teacher_id'])->role->name != 'teacher')
+            return redirect()->back()->withInput()->withErrors(['teacher_id' => 'Podany użytkownik nie jest nauczycielem!']);
+        if (User::find($attrs['teacher_id'])->language_id != $course->language_id)
+            return redirect()->back()->withInput()->withErrors(['teacher_id' => 'Podany nauczyciel nie uczy podanego języka!']);
+        $course->update($attrs);
+        return redirect()->route('courses.index')->with(['msg' => 'Zedytowano kurs!']);
+    }
+
+    /*
+     * Deletes the course with the given id
+     */
+    public function delete(int $id) {
+        if (!Auth::check())
+            abort(401);
+        $course = Course::findOrFail($id);
+        if (Auth::user()->cannot('delete', $course))
+            abort(403);
+        $course->delete();
+        return redirect()->route('courses.index')->with(['msg' => 'Usunięto kurs!']);
     }
 }

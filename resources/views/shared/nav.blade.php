@@ -16,11 +16,6 @@
                 <li class="nav-item">
                     <a class="nav-link @if(Request::is(route('courses.user'))) active @endif" aria-current="page" href="{{route('courses.user')}}">Moje kursy</a>
                 </li>
-                @if(Auth::user()->role->name == 'teacher')
-                <li class="nav-item">
-                    <a class="nav-link @if(Request::is(route('courses.teacher'))) active @endif" aria-current="page" href="{{route('courses.teacher')}}">Prowadzone kursy</a>
-                </li>
-                @endif
                 <li class="nav-item">
                     <a class="nav-link @if(Request::is(route('user.index'))) active @endif" aria-current="page" href="{{route('user.index')}}">Konto</a>
                 </li>

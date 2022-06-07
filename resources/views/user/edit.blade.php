@@ -3,10 +3,18 @@
 @include('shared.head', ['title' => 'Edytowanie użytkownika'])
 <body class="pt-5 pb-4">
 @include('shared.nav')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="container pt-2">
-{{--    TODO errors--}}
     <h2>Edytuj dane</h2>
-    <form method="POST" action="{{route('user.edit')}}">
+    <form method="POST" action="{{route('courses.update')}}">
         @csrf
         <div class="mb-3">
             <label class="form-label" for="name">Nazwa użytkownika</label>

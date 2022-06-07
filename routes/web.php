@@ -38,11 +38,10 @@ Route::controller(CourseController::class)->group(function() {
     Route::get('/courses', 'index')->name('courses.index');
     Route::post('/courses', 'enroll')->name('courses.enroll');
     Route::get('/courses/user', 'user')->name('courses.user');
-    Route::get('/courses/teacher', 'teacher')->name('courses.teacher');
     Route::get('/courses/add', 'add')->name('courses.add');
     Route::post('/courses/add', 'create')->name('courses.create');
-//    TODO
     Route::get('/courses/{id}/edit', 'edit')->name('courses.edit');
+    Route::post('/courses/{id}/edit', 'update')->name('courses.update');
     Route::get('/courses/{id}/delete', 'delete')->name('courses.delete');
 });
 

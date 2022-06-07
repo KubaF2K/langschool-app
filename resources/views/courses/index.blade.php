@@ -18,14 +18,17 @@
             </ul>
         </div>
     @endif
-    @if(Auth::user()->role->name == 'admin')
+    @if(Auth::check() && Auth::user()->role->name == 'admin')
         <a href="{{route('courses.add')}}" class="btn-outline-primary btn">Dodaj kurs</a>
     @endif
-{{--        TODO usuwanie kursów--}}
     <div class="row">
         <h1>Nasze kursy:</h1>
         @forelse($languages as $language)
+
             <div class="container border rounded p-4 m-3">
+                @if(Auth::check() && Auth::user()->role->name == 'teacher' && Auth::user()->language == $language)
+                    <a href="{{route('courses.add')}}" class="btn-outline-primary btn">Dodaj kurs</a>
+                @endif
                 <h2 class="border-bottom p-3 w-auto"><img class="img-thumbnail" style="height: 5rem" src="{{asset('storage/'.$language->code.'.svg')}}" alt="{{$language->name}}"/> Język {{$language->name}}</h2>
                 @forelse($language->courses as $course)
                     <div class="row p-2 @if(!$loop->last) border-bottom @endif">
@@ -35,11 +38,19 @@
                         <h4>Cena: {{$course->price}} zł</h4>
                         <h5>Prowadzący: {{$course->teacher->first_name.' '.$course->teacher->last_name}}</h5>
 {{--                        TODO Button view, sign up--}}
-                        <form action="{{route('courses.enroll')}}" method="POST">
-                            @csrf
-                            <input name="course_id" type="hidden" value="{{$course->id}}"/>
-                            <input type="submit" value="Zapisz się" class="btn btn-primary"/>
-                        </form>
+                        @if(Auth::check() && ($course->teacher_id == Auth::id() || Auth::user()->role->name == 'admin'))
+                            <div class="mb-2">
+                                <a href="{{route('courses.edit', $course->id)}}" class="btn-success btn">Edytuj</a>
+                                <a onclick="if(confirm('Czy na pewno chcesz usunąć ten kurs?')) window.location.replace('{{route('courses.delete', $course->id)}}');" class="btn-danger btn">Usuń</a>
+                            </div>
+                        @endif
+                        @if(!Auth::check() || Auth::id() != $course->teacher_id)
+                            <form action="{{route('courses.enroll')}}" method="POST">
+                                @csrf
+                                <input name="course_id" type="hidden" value="{{$course->id}}"/>
+                                <input type="submit" value="Zapisz się" class="btn btn-primary"/>
+                            </form>
+                        @endif
                     </div>
                 @empty
                     <h3>Brak kursów!</h3>
