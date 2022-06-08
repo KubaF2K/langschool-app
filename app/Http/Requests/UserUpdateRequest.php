@@ -25,10 +25,12 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'exists:users,id',
             'name' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email'
+            'email' => 'email',
+            'role_id' => 'exists:roles,id'
         ];
     }
 }

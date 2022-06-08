@@ -4,11 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ParticipantAcceptRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Course;
+use App\Models\Language;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    /*
+     * Deletes a user
+     */
+    public function delete(Request $request) {
+        if (!Auth::check())
+            abort(401);
+        if (Auth::user()->role->name != 'admin')
+            abort(403);
+        if ($request->id == Auth::id())
+            return redirect()->back()->withErrors(['id' => 'Nie można usunąć samego siebie!']);
+        User::findOrFail($request->id)->delete();
+        return redirect()->back()->with(['msg' => 'Usunięto użytkownika!']);
+    }
+
     /*
      * Shows user information.
      */
@@ -31,11 +49,14 @@ class UserController extends Controller
      * Logs out user and updates user data.
      */
     public function update(UserUpdateRequest $request) {
-        $user = User::findOrFail(Auth::user()->id);
-        Auth::guard('web')->logout();
+        $new_data = $request->all();
+        $user = User::findOrFail($new_data['id']);
+        if (Auth::id() == $new_data['id'])
+            Auth::guard('web')->logout();
         $user->update($request->all());
-
-        return redirect()->route('login');
+        if (!Auth::check())
+            return redirect()->route('login');
+        return redirect()->back()->with(['msg' => 'Zaktualizowano użytkownika!']);
     }
 
     /*
@@ -56,5 +77,21 @@ class UserController extends Controller
         if (Auth::user()->role->name != 'teacher')
             abort(403);
         return view('user.teacher-panel', ['courses' => Auth::user()->taughtCourses]);
+    }
+
+    /*
+     * Displays the admin panel, for managing users and courses
+     */
+    public function adminPanel() {
+        if(!Auth::check())
+            abort(401);
+        if (Auth::user()->role->name != 'admin')
+            abort(403);
+        return view('user.admin-panel', [
+            'users' => User::all(),
+            'roles' => Role::all(),
+            'courses' => Course::all(),
+            'languages' => Language::all()
+        ]);
     }
 }

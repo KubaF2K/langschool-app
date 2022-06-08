@@ -29,8 +29,12 @@ Route::get('/', function () {
     $top_courses = Course::all()
         ->whereIn('id', $top_course_ids)
         ->take(4);
+    $newest_courses = Course::select()
+        ->orderByDesc('created_at')
+        ->take(4)
+        ->get();
 
-    return view('index', ['top_courses' => $top_courses]);
+    return view('index', ['top_courses' => $top_courses, 'newest_courses' => $newest_courses]);
 })->name('index');
 
 Route::controller(CourseController::class)->group(function() {
@@ -49,11 +53,13 @@ Route::controller(CourseController::class)->group(function() {
 });
 
 Route::controller(UserController::class)->group(function () {
+    Route::post('/user/delete', 'delete')->name('user.delete');
     Route::get('/user', 'index')->name('user.index');
     Route::get('/user/edit', 'edit')->name('user.edit');
     Route::post('/user/edit', 'update')->name('user.update');
     Route::get('/user/reset-password', 'resetPassword')->name('user.reset-password');
     Route::get('/user/teacher-panel', 'teacherPanel')->name('user.teacher-panel');
+    Route::get('/user/admin-panel', 'adminPanel')->name('user.admin-panel');
 });
 
 require __DIR__.'/auth.php';

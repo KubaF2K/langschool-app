@@ -40,23 +40,38 @@
         </p>
     </div>
     <div class="row">
+        @if(count($newest_courses) > 0)
+            <h2>Najnowsze kursy</h2>
+        @endif
+        @foreach($newest_courses as $course)
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card">
+                    <img src="{{asset('storage/'.$course->language->code.'.svg')}}" class="card-img-top" style="width: 100%; height: 20vh; object-fit: cover;" alt="{{$course->name}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{$course->name}}</h5>
+                        <p class="card-text">{{$course->price.' zł'}}<br>{{$course->hours}} godzin</p>
+                        <a href="{{route('courses.view', ['id' => $course->id])}}" class="btn btn-primary">Więcej szczegółów...</a>
+                    </div>
+                </div>
+            </div>
+        @endforeach
         @if(count($top_courses) > 0)
             <h2>Najpopularniejsze kursy</h2>
         @endif
         @foreach($top_courses as $course)
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card">
-                    <img src="{{asset('storage/'.$course->language->code.'.svg')}}" class="card-img-top" alt="{{$course->name}}">
+                    <img src="{{asset('storage/'.$course->language->code.'.svg')}}" class="card-img-top" style="width: 100%; height: 20vh; object-fit: cover;" alt="{{$course->name}}">
                     <div class="card-body">
                         <h5 class="card-title">{{$course->name}}</h5>
-                        <p class="card-text">{{$course->description}}<br>{{$course->price.' zł'}}</p>
-{{--                        <a href="{{route('courses.show', ['id' => $course->id])}}" class="btn btn-primary">Więcej szczegółów...</a>--}}
+                        <p class="card-text">{{$course->price.' zł'}}<br>{{$course->hours}} godzin</p>
+                        <a href="{{route('courses.view', ['id' => $course->id])}}" class="btn btn-primary">Więcej szczegółów...</a>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
-    <div class="row">
+    <div class="border rounded p-2 mt-2 mx-auto mb-2 text-center" style="width: max-content;">
         <h2>Kontakt</h2>
         <p>
             Adres:<br>
@@ -67,7 +82,7 @@
             Telefon: +48 987 654 321
         </p>
         <p>
-            Email: kursy@langschool.pl
+            Email: langschoolapp@gmail.com
         </p>
     </div>
 </div>

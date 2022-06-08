@@ -14,8 +14,9 @@
 @endif
 <div class="container pt-2">
     <h2>Edytuj dane</h2>
-    <form method="POST" action="{{route('courses.update')}}">
+    <form method="POST" action="{{route('user.update')}}">
         @csrf
+        <input type="hidden" name="id" value="{{Auth::id()}}">
         <div class="mb-3">
             <label class="form-label" for="name">Nazwa użytkownika</label>
             <input class="form-control" id="name" name="name" value="{{Auth::user()->name}}">

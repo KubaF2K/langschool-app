@@ -18,6 +18,9 @@
             </ul>
         </div>
     @endif
+    <div class="container col-12 text-center">
+        <img class="rounded mx-auto col-4" src="{{asset('/storage/'.$course->language->code.'.svg')}}" alt="{{$course->language->name}}">
+    </div>
     <div class="row">
         <div class="row p-2">
             <h3>{{$course->name}}</h3>
