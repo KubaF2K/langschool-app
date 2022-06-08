@@ -15,10 +15,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('course_user', function (Blueprint $table) {
+        Schema::create('course_participant', function (Blueprint $table) {
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Course::class)->constrained();
-            $table->decimal('cost');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_user');
+        Schema::dropIfExists('course_participant');
     }
 };

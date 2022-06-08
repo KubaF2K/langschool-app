@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ParticipantAcceptRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -44,5 +45,16 @@ class UserController extends Controller
         $email = Auth::user()->email;
         Auth::guard('web')->logout();
         return redirect()->route('password.request')->withInput(['email' => $email]);
+    }
+
+    /*
+     * Displays the teacher's courses and course applications
+     */
+    public function teacherPanel() {
+        if (!Auth::check())
+            abort(401);
+        if (Auth::user()->role->name != 'teacher')
+            abort(403);
+        return view('user.teacher-panel', ['courses' => Auth::user()->taughtCourses]);
     }
 }

@@ -13,12 +13,17 @@
                     <a class="nav-link @if(Request::is(route('courses.index'))) active @endif" aria-current="page" href="{{route('courses.index')}}">Kursy</a>
                 </li>
                 @if(Auth::check())
-                <li class="nav-item">
-                    <a class="nav-link @if(Request::is(route('courses.user'))) active @endif" aria-current="page" href="{{route('courses.user')}}">Moje kursy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link @if(Request::is(route('user.index'))) active @endif" aria-current="page" href="{{route('user.index')}}">Konto</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if(Request::is(route('courses.user'))) active @endif" aria-current="page" href="{{route('courses.user')}}">Moje kursy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if(Request::is(route('user.index'))) active @endif" aria-current="page" href="{{route('user.index')}}">Konto</a>
+                    </li>
+                    @if(Auth::user()->role->name == 'teacher')
+                        <li class="nav-item">
+                            <a class="nav-link @if(Request::is(route('user.teacher-panel'))) active @endif" aria-current="page" href="{{route('user.teacher-panel')}}">Panel nauczyciela</a>
+                        </li>
+                    @endif
                 @endif
             </ul>
             <div class="d-flex">

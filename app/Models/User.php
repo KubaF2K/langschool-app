@@ -97,12 +97,20 @@ class User extends Authenticatable
     ];
 
     /**
-     * The courses the user takes part in.
+     * The courses the user has signed up for.
      */
     public function courses()
     {
-        return $this->belongsToMany(Course::class)->withTimestamps();
+        return $this->belongsToMany(Course::class)->withTimestamps()->withPivot('cost');
     }
+
+    /**
+     * The courses this user attends.
+     */
+    public function attendedCourses() {
+        return $this->belongsToMany(Course::class, 'course_participant')->withTimestamps();
+    }
+
 
     /*
      * The courses that this user teaches.

@@ -46,10 +46,17 @@ class Course extends Model
     protected $fillable = ['name', 'hours', 'description', 'price', 'language_id', 'teacher_id'];
 
     /*
-     * The users that take part in this course.
+     * The users that have signed up this course.
      */
     public function users() {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('cost');
+    }
+
+    /*
+     * The users that take part in this course.
+     */
+    public function participants() {
+        return $this->belongsToMany(User::class, 'course_participant')->withTimestamps();
     }
 
     /*

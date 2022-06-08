@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CourseCreateRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Http\Requests\EnrollCourseRequest;
+use App\Http\Requests\ParticipantAcceptRequest;
+use App\Http\Requests\ParticipantDeclineRequest;
+use App\Http\Requests\ParticipantRemoveRequest;
 use App\Models\Course;
 use App\Models\Language;
 use App\Models\Role;
@@ -29,7 +32,8 @@ class CourseController extends Controller
             return redirect()->route('login');
         if (Auth::user()->courses->where('id', '=', $request->input('course_id'))->isNotEmpty())
             return redirect()->back()->withErrors(['course_id' => 'Jesteś już zapisany na ten kurs!']);
-        Auth::user()->courses()->attach(Course::find($request->input('course_id')));
+        $course = Course::find($request->input('course_id'));
+        Auth::user()->courses()->attach($course, ['cost' => $course->price-($course->price / 10 * min(3, Auth::user()->attendedCourses()->count()))]);
 
         //TODO redirect to your courses
         return redirect()->back()->with('msg', 'Zapisano pomyślnie!');
@@ -40,8 +44,15 @@ class CourseController extends Controller
      */
     public function user() {
         if (Auth::check())
-            return view('courses.user', ['courses' => Auth::user()->courses]);
+            return view('courses.user', ['courses' => Auth::user()->courses, 'attended_courses' => Auth::user()->attendedCourses]);
         return redirect()->route('login');
+    }
+
+    /*
+     * Returns a view with a course's details
+     */
+    public function view(int $id) {
+        return view('courses.view', ['course' => Course::findOrFail($id)]);
     }
 
     /*
@@ -64,10 +75,6 @@ class CourseController extends Controller
      */
     public function create(CourseCreateRequest $request) {
         $course = $request->all();
-        if (!Auth::check())
-            abort(401);
-        if (Auth::user()->cannot('create', Course::class))
-            abort(403);
         if (Auth::user()->role->name == 'teacher')
             if (Auth::user()->language_id != $course['language_id'])
                 abort(403);
@@ -97,14 +104,13 @@ class CourseController extends Controller
     public function update(CourseUpdateRequest $request, int $id) {
         $attrs = $request->all();
         $course = Course::findOrFail($id);
-        if (!Auth::check())
-            abort(401);
-        if (Auth::user()->cannot('update', $course))
-            abort(403);
         if (User::find($attrs['teacher_id'])->role->name != 'teacher')
             return redirect()->back()->withInput()->withErrors(['teacher_id' => 'Podany użytkownik nie jest nauczycielem!']);
         if (User::find($attrs['teacher_id'])->language_id != $course->language_id)
             return redirect()->back()->withInput()->withErrors(['teacher_id' => 'Podany nauczyciel nie uczy podanego języka!']);
+        if (Course::where('name', '=', $attrs['name'])->get()->except($id)->count() > 0)
+            return redirect()->back()->withInput()->withErrors(['name' => 'Podana nazwa jest już zajęta!']);
+
         $course->update($attrs);
         return redirect()->route('courses.index')->with(['msg' => 'Zedytowano kurs!']);
     }
@@ -120,5 +126,38 @@ class CourseController extends Controller
             abort(403);
         $course->delete();
         return redirect()->route('courses.index')->with(['msg' => 'Usunięto kurs!']);
+    }
+
+    /*
+     * Accept a user's course sign up request
+     */
+    public function acceptParticipant(ParticipantAcceptRequest $request) {
+        $data = $request->all();
+        $course = Course::findOrFail($data['course_id']);
+        $course->participants()->attach($data['user_id']);
+        $course->users()->detach($data['user_id']);
+        return redirect()->back()->with(['msg' => 'Zaakceptowano kursanta!']);
+    }
+
+    /*
+     * Decline a user's course sign up request
+     */
+    public function declineParticipant(ParticipantDeclineRequest $request) {
+        $data = $request->all();
+        if ($data['user_id'] != Auth::id() && Auth::user()->role->name != 'teacher')
+            abort(403);
+        Course::findOrFail($data['course_id'])->users()->detach($data['user_id']);
+        return redirect()->back()->with(['msg' => 'Usunięto aplikację!']);
+    }
+
+    /*
+     * Remove a participant from a course
+     */
+    public function removeParticipant(ParticipantRemoveRequest $request) {
+        $data = $request->all();
+        if ($data['user_id'] != Auth::id() && Auth::user()->role->name != 'teacher')
+            abort(403);
+        Course::findOrFail($data['course_id'])->participants()->detach($data['user_id']);
+        return redirect()->back()->with(['msg' => 'Wypisano z kursu!']);
     }
 }
