@@ -19,7 +19,7 @@
         </div>
     @endif
     <div class="container col-12 text-center">
-        <img class="rounded mx-auto col-4" src="{{asset('/storage/'.$course->language->code.'.svg')}}" alt="{{$course->language->name}}">
+        <img class="rounded border mx-auto col-4" src="{{asset('/storage/'.$course->language->code.'.svg')}}" alt="{{$course->language->name}}">
     </div>
     <div class="row">
         <div class="row p-2">
@@ -27,7 +27,7 @@
             <p>{{$course->description}}</p>
             <h4>Liczba godzin: {{$course->hours}}</h4>
             @if(Auth::check() && Auth::user()->attendedCourses()->count() > 0)
-                <h4>Cena: {{$course->price-($course->price / 10 * min(3, Auth::user()->attendedCourses()->count()))}} zł (-{{min(3, Auth::user()->attendedCourses()->count())}}0%)</h4>
+                <h4>Cena: {{$course->price-($course->price / 10 * min(3, Auth::user()->courseHistory()->count()))}} zł (-{{min(3, Auth::user()->courseHistory()->count())}}0%)</h4>
             @else
                 <h4>Cena: {{$course->price}} zł</h4>
             @endif
@@ -41,6 +41,7 @@
             @if(Auth::id() != $course->teacher_id)
                 <form action="{{route('courses.enroll')}}" method="POST">
                     @csrf
+                    <input name="user_id" type="hidden" value="{{Auth::id()}}"/>
                     <input name="course_id" type="hidden" value="{{$course->id}}"/>
                     <input type="submit" value="Zapisz się" class="btn btn-primary"/>
                 </form>

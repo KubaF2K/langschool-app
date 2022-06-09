@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ParticipantAcceptRequest;
+use App\Http\Requests\UserDeleteRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\Course;
 use App\Models\Language;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -16,14 +15,8 @@ class UserController extends Controller
     /*
      * Deletes a user
      */
-    public function delete(Request $request) {
-        if (!Auth::check())
-            abort(401);
-        if (Auth::user()->role->name != 'admin')
-            abort(403);
-        if ($request->id == Auth::id())
-            return redirect()->back()->withErrors(['id' => 'Nie można usunąć samego siebie!']);
-        User::findOrFail($request->id)->delete();
+    public function delete(UserDeleteRequest $request) {
+        User::findOrFail($request->input('id'))->delete();
         return redirect()->back()->with(['msg' => 'Usunięto użytkownika!']);
     }
 

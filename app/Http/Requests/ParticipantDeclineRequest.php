@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Course;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ParticipantDeclineRequest extends FormRequest
 {
@@ -14,7 +16,9 @@ class ParticipantDeclineRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return Auth::id() == $this->input('user_id') ||
+            Auth::id() == Course::findOrFail($this->input('course_id'))->teacher_id ||
+            Auth::user()->role->name == 'admin';
     }
 
     /**
@@ -25,8 +29,14 @@ class ParticipantDeclineRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:course_user,user_id',
-            'course_id' => 'required|exists:course_user,course_id'
+            'user_id' => [
+                'required',
+                Rule::exists('course_user', 'user_id')->where('course_id', $this->input('course_id'))
+            ],
+            'course_id' => [
+                'required',
+                Rule::exists('course_user', 'course_id')->where('user_id', $this->input('user_id'))
+            ]
         ];
     }
 }

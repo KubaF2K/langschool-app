@@ -129,8 +129,11 @@ return [
     'url'                  => 'Format pola :attribute jest nieprawidłowy.',
     'uuid'                 => 'Pole :attribute musi być poprawnym identyfikatorem UUID.',
     'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'course_id' => [
+            'unique' => 'Jesteś już zapisany/a na ten kurs!'
+        ],
+        'teacher_id' => [
+            'exists' => 'Podany użytkownik nie uczy podanego języka!'
         ],
     ],
 ];

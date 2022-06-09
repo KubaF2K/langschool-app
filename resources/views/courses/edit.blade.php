@@ -14,8 +14,9 @@
         </div>
     @endif
     <h2>Edycja</h2>
-    <form method="POST" action="{{route('courses.edit', $course->id)}}">
+    <form method="POST" action="{{route('courses.update')}}">
         @csrf
+        <input type="hidden" name="id" value="{{$course->id}}"/>
         <div class="mb-3" @if(Auth::user()->role->name == 'teacher') style="display: none;" @endif>
             <label class="form-label" for="teacher_id">Prowadzący</label>
             <select class="form-control @error('teacher_id') is-invalid @enderror" id="teacher_id" name="teacher_id">

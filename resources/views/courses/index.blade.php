@@ -38,6 +38,7 @@
                         <h5>Prowadzący: {{$course->teacher->first_name.' '.$course->teacher->last_name}}</h5>
                         <div class="mt-2"><a href="{{route('courses.view', $course->id)}}" class="btn-primary btn">Wyświetl</a>
                         @if(Auth::check() && ($course->teacher_id == Auth::id() || Auth::user()->role->name == 'admin'))
+{{--                            TODO post--}}
                             <a onclick="if(confirm('Czy na pewno chcesz usunąć ten kurs?')) window.location.replace('{{route('courses.delete', $course->id)}}');" class="btn-outline-danger btn float-end">Usuń</a>
                             <a href="{{route('courses.edit', $course->id)}}" class="btn-outline-success btn float-end me-2">Edytuj</a>
                         @endif

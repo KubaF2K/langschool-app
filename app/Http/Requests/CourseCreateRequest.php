@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Models\Course;
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class CourseCreateRequest extends FormRequest
 {
@@ -15,7 +17,8 @@ class CourseCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('create', Course::class);
+        return Auth::user()->can('create', Course::class) &&
+            (Auth::user()->role->name == 'admin' || Auth::user()->language_id == $this->input('language_id'));
     }
 
     /**
@@ -31,7 +34,13 @@ class CourseCreateRequest extends FormRequest
             'price' => 'required|numeric|regex:/^\d{1,8}(\.\d{1,2})?$/',
             'description' => 'required',
             'language_id' => 'required|exists:languages,id',
-            'teacher_id' => 'required|exists:users,id'
+            'teacher_id' => [
+                'required',
+                Rule::exists('users', 'user_id')
+                    ->where('role_id', Role::where('name', '=', 'teacher')->first()->id),
+                Rule::exists('users', 'user_id')
+                    ->where('language_id', $this->input('language_id'))
+            ]
         ];
     }
 }

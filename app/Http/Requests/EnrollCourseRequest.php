@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class EnrollCourseRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class EnrollCourseRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::user()->role->name == 'admin' || Auth::id() == $this->input('user_id');
     }
 
     /**
@@ -25,7 +26,13 @@ class EnrollCourseRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'course_id' => [
+                'required',
+                'exists:courses,id',
+                Rule::unique('course_user', 'course_id')->where('user_id', $this->input('user_id')),
+                Rule::unique('course_participant', 'course_id')->where('user_id', $this->input('user_id'))
+            ]
         ];
     }
 }

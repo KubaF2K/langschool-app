@@ -132,4 +132,11 @@ class User extends Authenticatable
     public function role() {
         return $this->belongsTo(Role::class);
     }
+
+    /*
+     * This user's attended course history.
+     */
+    public function courseHistory() {
+        return $this->belongsToMany(Course::class, 'user_reservation_history')->withTimestamps();
+    }
 }
