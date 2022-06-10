@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include('shared.head', ['title' => 'Dane użytkownika'])
-<body class="pt-5 pb-4">
+<body class="pb-4">
 @include('shared.nav')
 <div class="container pt-2">
     <h2>Profil użytkownika</h2>

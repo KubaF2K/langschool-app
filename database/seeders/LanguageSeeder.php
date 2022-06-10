@@ -22,11 +22,11 @@ class LanguageSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
         Language::upsert(
             [
-                ['code' => 'EN', 'name' => 'Angielski', 'description' => '', 'img' => 'en.webp'],
-                ['code' => 'PL', 'name' => 'Polski', 'description' => '', 'img' => 'pl.webp'],
-                ['code' => 'DE', 'name' => 'Niemiecki', 'description' => '', 'img' => 'de.webp'],
-                ['code' => 'ES', 'name' => 'Hiszpański', 'description' => '', 'img' => 'es.webp'],
-                ['code' => 'FR', 'name' => 'Francuski', 'description' => '', 'img' => 'fr.webp']
+                ['code' => 'EN', 'name' => 'Angielski', 'description' => 'Język przydatny wszędzie'],
+                ['code' => 'PL', 'name' => 'Polski', 'description' => 'Nasza ojczysta mowa'],
+                ['code' => 'DE', 'name' => 'Niemiecki', 'description' => 'Język sąsiadów z zachodu'],
+                ['code' => 'ES', 'name' => 'Hiszpański', 'description' => 'Język kraju flamenco'],
+                ['code' => 'FR', 'name' => 'Francuski', 'description' => 'Oficjalny język Unii Europejskiej']
             ],
             'code'
         );

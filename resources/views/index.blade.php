@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include("shared.head", ['title' => 'Langschool'])
-<body class="pt-5 pb-4">
+<body class="pb-4">
 @include("shared.nav")
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">

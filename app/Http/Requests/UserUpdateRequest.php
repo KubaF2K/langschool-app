@@ -29,12 +29,13 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:users,id',
-            'name' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => [
                 'email',
-                Rule::unique('users', 'email')->ignore($this->input('id'))
+                Rule::unique('users', 'email')->ignore($this->input('id')),
+                'max:255'
             ],
             'role_id' => [
                 Rule::prohibitedIf(Auth::user()->role->name != 'admin')

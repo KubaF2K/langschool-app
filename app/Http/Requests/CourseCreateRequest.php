@@ -29,16 +29,16 @@ class CourseCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:courses',
-            'hours' => 'required|numeric|integer|min:0',
+            'name' => 'required|string|unique:courses|max:255',
+            'hours' => 'required|numeric|integer|min:0|max:2147483647',
             'price' => 'required|numeric|regex:/^\d{1,8}(\.\d{1,2})?$/',
-            'description' => 'required',
+            'description' => 'required|string|max:32767',
             'language_id' => 'required|exists:languages,id',
             'teacher_id' => [
                 'required',
-                Rule::exists('users', 'user_id')
+                Rule::exists('users', 'id')
                     ->where('role_id', Role::where('name', '=', 'teacher')->first()->id),
-                Rule::exists('users', 'user_id')
+                Rule::exists('users', 'id')
                     ->where('language_id', $this->input('language_id'))
             ]
         ];

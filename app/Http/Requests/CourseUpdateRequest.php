@@ -30,9 +30,11 @@ class CourseUpdateRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('courses', 'name')->ignore($this->input('id'))
+                'string',
+                Rule::unique('courses', 'name')->ignore($this->input('id')),
+                'max:255'
             ],
-            'hours' => 'required|numeric|integer|min:0',
+            'hours' => 'required|numeric|integer|min:0|max:2147483647',
             'price' => 'required|numeric|regex:/^\d{1,8}(\.\d{1,2})?$/',
             'description' => 'required',
             'teacher_id' => [

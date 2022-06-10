@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include('shared.head', ['title' => 'Panel nauczyciela'])
-<body class="pt-5 pb-4">
+<body class="pb-4">
 @include('shared.nav')
 @if (session('msg'))
     <div class="alert alert-success">
@@ -53,7 +53,8 @@
                                 @csrf
                                 <input type="hidden" name="user_id" value="{{$user->id}}">
                                 <input type="hidden" name="course_id" value="{{$course->id}}">
-                                <input type="submit" value="Ignoruj" class="btn-outline-danger btn">
+                                <input type="submit" value="Odrzuć" class="btn-outline-danger btn"
+                                       onclick="return confirm('Czy na pewno chcesz odrzucić tą prośbę? Użytkownik zostanie o tym powiadomiony.');"/>
                             </form>
                         </td>
                     </tr>
@@ -71,8 +72,13 @@
                 <h4>Liczba godzin: {{$course->hours}}</h4>
                 <h4>Cena: {{$course->price}} zł</h4>
                 <div class="mb-2">
-                    <a href="{{route('courses.edit', $course->id)}}" class="btn-success btn">Edytuj</a>
-                    <a onclick="if(confirm('Czy na pewno chcesz usunąć ten kurs?')) window.location.replace('{{route('courses.delete', $course->id)}}');" class="btn-danger btn">Usuń</a>
+                    <form action="{{route('courses.delete')}}" method="post">
+                        @csrf
+                        <a href="{{route('courses.edit', $course->id)}}" class="btn-success btn">Edytuj</a>
+                        <input type="hidden" name="id" value="{{$course->id}}"/>
+                        <input type="submit" class="btn-danger btn" value="Usuń"
+                               onclick="return confirm('Czy na pewno chcesz usunąć ten kurs?')"/>
+                    </form>
                 </div>
                 <h5>Kursanci</h5>
                 <table class="table">
@@ -97,7 +103,8 @@
                                         @csrf
                                         <input type="hidden" name="course_id" value="{{$course->id}}">
                                         <input type="hidden" name="user_id" value="{{$user->id}}">
-                                        <input type="submit" value="Usuń" class="btn-outline-danger btn">
+                                        <input type="submit" value="Usuń" class="btn-outline-danger btn"
+                                               onclick="return confirm('Czy na pewno chcesz usunąć tego użytkownika z kursu? Użytkownik zostanie o tym powiadomiony.')"/>
                                     </form>
                                 </td>
                             </tr>

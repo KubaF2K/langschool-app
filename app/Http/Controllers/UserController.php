@@ -83,7 +83,6 @@ class UserController extends Controller
         return view('user.admin-panel', [
             'users' => User::all(),
             'roles' => Role::all(),
-            'courses' => Course::all(),
             'languages' => Language::all()
         ]);
     }

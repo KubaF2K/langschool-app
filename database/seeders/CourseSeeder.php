@@ -23,7 +23,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Angielski podstawowy',
                     'hours' => 5,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Poznaj podstawy języka którym można się dogadać prawie wszędzie! Ten kurs uczy angielskiego od podstaw, w prosty sposób nauczysz się słów i zwrotów przydatnych na co dzień.',
                     'price' => 550,
                     'language_id' => 1,
                     'teacher_id' => 2
@@ -31,7 +31,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Angielski zaawansowany',
                     'hours' => 6,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Ten kurs jest przeznaczony dla osób które chcą udoskonalić swoją znajomość języka angielskiego. Celem kursu jest kształtowanie umiejętności komunikacji oraz poznanie nowych zwrotów i wyrażeń.',
                     'price' => 800,
                     'language_id' => 1,
                     'teacher_id' => 2
@@ -39,7 +39,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Polski dla obcokrajowców',
                     'hours' => 4,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Jeśli potrzebujesz poznać polski lepiej, ten kurs jest dla ciebie. Pomoże ci szybko poznać polski w stopniu komunikatywnym.',
                     'price' => 450,
                     'language_id' => 2,
                     'teacher_id' => 3
@@ -47,7 +47,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Niemiecki podstawowy',
                     'hours' => 5,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Poznaj podstawy języka sąsiadów z zachodu. Kurs opracowany jest z myślą o praktycznym zastosowaniu języka.',
                     'price' => 520,
                     'language_id' => 3,
                     'teacher_id' => 4
@@ -55,7 +55,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Niemiecki zaawansowany',
                     'hours' => 6,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Kurs niemiecki dla zaawansowanych umożliwia opanowanie prawie 2000 nowych wyrażeń i poznać bliżej gramatykę.',
                     'price' => 780,
                     'language_id' => 3,
                     'teacher_id' => 4
@@ -63,7 +63,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Hiszpański podstawowy',
                     'hours' => 5,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Poznaj podstawy hiszpańskiego dzięki naszemu kursowi. W łatwy sposób możesz poznać 2500 słów i opanować podstawową komunikację.',
                     'price' => 500,
                     'language_id' => 4,
                     'teacher_id' => 5
@@ -71,7 +71,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Hiszpański zaawansowany',
                     'hours' => 6,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Nasz kurs zaawansowanego hiszpańskiego rozszerza nasz kurs podstawowy o 4000 słów i wyrażeń, plus pozwala na naukę słownictwa używanego na co dzień.',
                     'price' => 750,
                     'language_id' => 4,
                     'teacher_id' => 5
@@ -79,7 +79,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Francuski podstawowy',
                     'hours' => 5,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Kurs francuskiego podstawowego pozwala na przyswojenie wymowy i podstawowego słownictwa potrzebnego w życiu codziennym.',
                     'price' => 500,
                     'language_id' => 5,
                     'teacher_id' => 6
@@ -87,7 +87,7 @@ class CourseSeeder extends Seeder
                 [
                     'name' => 'Francuski zaawansowany',
                     'hours' => 6,
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'description' => 'Francuski zaawansowany utrwala materiał poznany w kursie podstawowym oraz uczy 3000 nowych wyrażeń, nastawionych na kulturę i obyczaje.',
                     'price' => 750,
                     'language_id' => 5,
                     'teacher_id' => 6

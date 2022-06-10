@@ -22,9 +22,9 @@ class UserSeeder extends Seeder
         User::upsert(
             [
                 [
-                    'name' => 'admin', 'email' => 'jakubfoltarz@gmail.com',
-                    'password' => Hash::make('Q@wertyuiop'), 'role_id' => 1, 'language_id' => null,
-                    'first_name' => 'Jakub', 'last_name' => 'Foltarz'
+                    'name' => 'admin', 'email' => 'admin@email.com',
+                    'password' => Hash::make('12345678'), 'role_id' => 1, 'language_id' => null,
+                    'first_name' => 'Administrator', 'last_name' => 'Strony'
                 ],
                 [
                     'name' => 'bob', 'email' => 'bob@email.com', 'password' => Hash::make('1234'),
@@ -45,6 +45,10 @@ class UserSeeder extends Seeder
                 [
                     'name' => 'jean', 'email' => 'jean@email.com', 'password' => Hash::make('1234'),
                     'role_id' => 3, 'language_id' => 5, 'first_name' => 'Jean', 'last_name' => 'Martin'
+                ],
+                [
+                    'name' => 'jan', 'email' => 'jan@email.com', 'password' => Hash::make('1234'),
+                    'role_id' => 2, 'language_id' => null, 'first_name' => 'Jan', 'last_name' => 'Kowalski'
                 ]
             ],
             'name'

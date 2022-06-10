@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include('shared.head', ['title' => 'Moje kursy'])
-<body class="pt-5 pb-4">
+<body class="pb-4">
 @include('shared.nav')
 <div class="container pt-2">
     @if (session('msg'))
@@ -19,7 +19,7 @@
         </div>
     @endif
     <h2 class="mb-4">Zapisy na kursy</h2>
-    <div class="container border rounded">
+    <div class="container border rounded mb-3">
         @forelse($courses as $course)
             <div class="row p-2 @if(!$loop->last) border-bottom @endif">
                 <h3>{{$course->name}}</h3>

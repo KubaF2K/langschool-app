@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include('shared.head', ['title' => 'Edytowanie użytkownika'])
-<body class="pt-5 pb-4">
+<body class="pb-4">
 @include('shared.nav')
 @if ($errors->any())
     <div class="alert alert-danger">

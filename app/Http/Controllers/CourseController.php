@@ -9,11 +9,15 @@ use App\Http\Requests\EnrollCourseRequest;
 use App\Http\Requests\ParticipantAcceptRequest;
 use App\Http\Requests\ParticipantDeclineRequest;
 use App\Http\Requests\ParticipantRemoveRequest;
+use App\Mail\ApplicationAccepted;
+use App\Mail\ApplicationDeclined;
+use App\Mail\RemovedFromCourse;
 use App\Models\Course;
 use App\Models\Language;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Mail;
 
 class CourseController extends Controller
 {
@@ -21,7 +25,7 @@ class CourseController extends Controller
      * Returns the courses view, grouped by language
      */
     public function index() {
-        return view('courses.index', ['languages' => Language::all()]);
+        return view('courses.index', ['languages' => Language::with('courses')->get()]);
     }
 
     /*
@@ -108,7 +112,7 @@ class CourseController extends Controller
     public function delete(CourseDeleteRequest $request) {
         $course = Course::findOrFail($request->input('id'));
         $course->delete();
-        return redirect()->route('courses.index')->with(['msg' => 'Usunięto kurs!']);
+        return redirect()->back()->with(['msg' => 'Usunięto kurs!']);
     }
 
     /*
@@ -121,6 +125,7 @@ class CourseController extends Controller
         $course = Course::findOrFail($data['course_id']);
         $course->participants()->attach($data['user_id']);
         $course->users()->detach($data['user_id']);
+        Mail::to($user)->send(new ApplicationAccepted($course, Auth::user()));
         return redirect()->back()->with(['msg' => 'Zaakceptowano kursanta!']);
     }
 
@@ -129,7 +134,11 @@ class CourseController extends Controller
      */
     public function declineParticipant(ParticipantDeclineRequest $request) {
         $data = $request->all();
-        Course::findOrFail($data['course_id'])->users()->detach($data['user_id']);
+        $course = Course::findOrFail($data['course_id']);
+        $date = $course->users()->find($data['user_id'])->pivot->created_at;
+        $course->users()->detach($data['user_id']);
+        if (Auth::id() != $data['user_id'])
+            Mail::to(User::find($data['user_id']))->send(new ApplicationDeclined($course, $date, Auth::user()));
         return redirect()->back()->with(['msg' => 'Usunięto aplikację!']);
     }
 
@@ -138,7 +147,10 @@ class CourseController extends Controller
      */
     public function removeParticipant(ParticipantRemoveRequest $request) {
         $data = $request->all();
-        Course::findOrFail($data['course_id'])->participants()->detach($data['user_id']);
+        $course = Course::findOrFail($data['course_id']);
+        $course->participants()->detach($data['user_id']);
+        if (Auth::id() != $data['user_id'])
+            Mail::to(User::find($data['user_id']))->send(new RemovedFromCourse($course, Auth::user()));
         return redirect()->back()->with(['msg' => 'Wypisano z kursu!']);
     }
 }

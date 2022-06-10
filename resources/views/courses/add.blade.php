@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include('shared.head', ['title' => 'Dodawanie kursu'])
-<body class="pt-5 pb-4">
+<body class="pb-4">
 @include('shared.nav')
 <div class="container pt-4">
     @if ($errors->any())

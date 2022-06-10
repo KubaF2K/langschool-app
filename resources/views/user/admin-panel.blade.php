@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include("shared.head", ['title' => 'Panel administracyjny'])
-<body class="pt-5 pb-4">
+<body class="pb-4">
 @include("shared.nav")
 <div class="container pt-4">
     @if (session('msg'))
@@ -67,7 +67,8 @@
                         <form method="post" action="{{route('user.delete')}}">
                             @csrf
                             <input type="hidden" name="id" value="{{$user->id}}">
-                            <input type="submit" class="btn-outline-danger btn" value="Usuń">
+                            <input type="submit" class="btn-outline-danger btn" value="Usuń"
+                                   onclick="return confirm('Czy na pewno chcesz usunąć tego użytkownika?');"/>
                         </form>
                     </td>
                 </tr>

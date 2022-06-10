@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,13 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/user/admin-panel', 'adminPanel')->name('user.admin-panel');
 });
 
-
+Route::controller(LanguageController::class)->group(function () {
+    Route::get('/language', 'index')->name('language.index');
+    Route::get('/language/add', 'add')->name('language.add');
+    Route::post('/language/add', 'create')->name('language.create');
+    Route::get('/language/{id}/edit', 'edit')->name('language.edit');
+    Route::post('/language/edit', 'update')->name('language.update');
+    Route::post('/language/delete', 'delete')->name('language.delete');
+});
 
 require __DIR__.'/auth.php';

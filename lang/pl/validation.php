@@ -135,5 +135,8 @@ return [
         'teacher_id' => [
             'exists' => 'Podany użytkownik nie uczy podanego języka!'
         ],
+        'id' => [
+            'prohibited' => 'Nie można usunąć języka który ma kursy!'
+        ]
     ],
 ];

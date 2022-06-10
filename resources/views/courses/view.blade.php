@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 @include("shared.head", ['title' => $course->name])
-<body class="pt-5 pb-4">
+<body class="pb-4">
 @include("shared.nav")
 <div class="container pt-4">
     @if (session('msg'))
@@ -19,7 +19,7 @@
         </div>
     @endif
     <div class="container col-12 text-center">
-        <img class="rounded border mx-auto col-4" src="{{asset('/storage/'.$course->language->code.'.svg')}}" alt="{{$course->language->name}}">
+        <img class="img-thumbnail mx-auto col-4" src="{{asset('/storage/'.$course->language->code.'.svg')}}" alt="{{$course->language->name}}">
     </div>
     <div class="row">
         <div class="row p-2">

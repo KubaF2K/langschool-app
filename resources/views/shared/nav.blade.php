@@ -28,6 +28,9 @@
                         <li class="nav-item">
                             <a class="nav-link @if(Request::is('user/admin-panel')) active @endif" aria-current="page" href="{{route('user.admin-panel')}}">Użytkownicy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(Request::is('language')) active @endif" aria-current="page" href="{{route('language.index')}}">Języki</a>
+                        </li>
                     @endif
                 @endif
             </ul>
