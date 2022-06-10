@@ -13,7 +13,7 @@
             </ul>
         </div>
     @endif
-    <h2>Edycja</h2>
+    <h2>Dodawanie</h2>
     <form method="POST" action="{{route('language.create')}}">
         @csrf
         <div class="mb-3">
