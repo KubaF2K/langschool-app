@@ -17,15 +17,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'index', [
-    'top_courses' => Course::withCount('participants')
-        ->orderByDesc('participants_count')
-        ->take(4)
-        ->get(),
-    'newest_courses' => Course::orderByDesc('created_at')
-        ->take(4)
-        ->get()
-])->name('index');
+Route::get('/', function() {
+    return view('index', [
+        'top_courses' => Course::withCount('participants')
+            ->orderByDesc('participants_count')
+            ->take(4)
+            ->get(),
+        'newest_courses' => Course::orderByDesc('created_at')
+            ->take(4)
+            ->get()
+    ]);
+})->name('index');
 
 Route::controller(CourseController::class)->group(function() {
     Route::get('/courses', 'index')->name('courses.index');
