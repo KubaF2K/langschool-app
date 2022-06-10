@@ -38,7 +38,7 @@
             <h3 class="p-4">Nie zapisałeś/aś się na żadne kursy!</h3>
         @endforelse
     </div>
-    <h2>Moje kursy</h2>
+    <h2 class="mb-4">Moje kursy</h2>
     <div class="container border rounded">
         @forelse($attended_courses as $course)
             <div class="row p-2 @if(!$loop->last) border-bottom @endif">
