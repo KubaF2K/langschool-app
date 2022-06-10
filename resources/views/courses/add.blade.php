@@ -16,7 +16,8 @@
     <h2>Nowy kurs</h2>
     <form method="POST" action="{{route('courses.create')}}">
         @csrf
-        <div class="mb-3" @if(Auth::user()->role->name == 'teacher') style="display: none;" @endif>
+        @if(Auth::user()->role->name == 'admin')
+        <div class="mb-3">
             <label class="form-label" for="language_id">Język</label>
             <select class="form-control @error('language_id') is-invalid @enderror" id="language_id" name="language_id">
                 @foreach($languages as $language)
@@ -24,7 +25,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="mb-3" @if(Auth::user()->role->name == 'teacher') style="display: none;" @endif>
+        <div class="mb-3">
             <label class="form-label" for="teacher_id">Prowadzący</label>
             <select class="form-control @error('teacher_id') is-invalid @enderror" id="teacher_id" name="teacher_id">
                 @foreach($teachers as $teacher)
@@ -32,6 +33,10 @@
                 @endforeach
             </select>
         </div>
+        @else
+            <input type="hidden" name="language_id" value="{{Auth::user()->language_id}}"/>
+            <input type="hidden" name="teacher_id" value="{{Auth::id()}}"/>
+        @endif
         <div class="mb-3">
             <label class="form-label" for="name">Nazwa</label>
             <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}">
